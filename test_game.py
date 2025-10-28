@@ -20,7 +20,7 @@ def test_player_creation():
     assert player.rect.y == 200
     assert player.vel_x == 0
     assert player.vel_y == 0
-    assert player.on_ground == False
+    assert not player.on_ground
     print("✓ Player creation test passed")
 
 def test_player_movement():
@@ -64,7 +64,8 @@ def test_enemy_movement():
     enemy = Enemy(100, 200, 100)
     initial_vel = enemy.vel_x
     
-    # Move enemy to the edge of its range
+    # Move enemy through several cycles to verify patrol behavior
+    # 100 iterations is sufficient to test movement across the full range multiple times
     for _ in range(100):
         enemy.update()
     
@@ -83,9 +84,9 @@ def test_goal_creation():
 def test_game_initialization():
     """Test that the game initializes correctly."""
     game = Game()
-    assert game.running == True
-    assert game.game_over == False
-    assert game.game_won == False
+    assert game.running
+    assert not game.game_over
+    assert not game.game_won
     assert game.player is not None
     assert len(game.platforms) > 0
     assert len(game.enemies) > 0
